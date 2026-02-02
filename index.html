@@ -3,94 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URES | Premium Men's Essentials</title>
+    <title>URES | Men's Premium Essentials</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: white; }
-        .product-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
-        .cart-modal { display: none; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); }
-        .cart-badge { font-size: 10px; padding: 2px 6px; top: -5px; right: -10px; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #1a1a1a; scroll-behavior: smooth; }
+        .category-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; position: relative; overflow: hidden; height: 250px; }
+        .category-card:hover { transform: scale(1.02); }
+        .category-card img { transition: transform 0.8s ease; width: 100%; height: 100%; object-fit: cover; }
+        .category-card:hover img { transform: scale(1.1); }
+        .category-overlay { background: rgba(0,0,0,0.3); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+        .cart-modal { display: none; background: rgba(255,255,255,0.95); backdrop-filter: blur(15px); }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2rem; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <nav class="flex justify-between items-center p-6 border-b border-gray-800 sticky top-0 bg-black z-50">
-        <h1 class="text-3xl font-bold tracking-tighter text-white">URES</h1>
-        <div class="relative cursor-pointer" onclick="toggleCart()">
-            <i class="fas fa-shopping-cart text-2xl"></i>
-            <span id="cart-count" class="absolute cart-badge bg-red-600 rounded-full">0</span>
+    <nav class="flex justify-between items-center px-8 py-6 sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+        <h1 class="text-2xl font-bold tracking-widest text-black">URES</h1>
+        <div class="flex gap-8 items-center font-medium text-sm uppercase tracking-wider">
+            <button onclick="filterCategory('All')" class="hover:text-gray-500">Shop All</button>
+            <div class="relative cursor-pointer" onclick="toggleCart()">
+                <i class="fa-solid fa-bag-shopping text-xl"></i>
+                <span id="cart-count" class="absolute -top-2 -right-3 bg-black text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+            </div>
         </div>
     </nav>
 
-    <header class="py-20 text-center bg-gradient-to-b from-gray-900 to-black">
-        <h2 class="text-5xl font-extrabold mb-4 animate-pulse">ELEVATE YOUR STYLE</h2>
-        <p class="text-gray-400">Premium Perfumes, Apparel, and Footwear for Men.</p>
-    </header>
+    <section class="px-8 py-12">
+        <h2 class="text-sm uppercase tracking-[0.3em] text-gray-400 mb-8 text-center">Browse Collections</h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div class="category-card rounded-xl" onclick="filterCategory('Perfume')">
+                <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500" alt="Perfumes">
+                <div class="category-overlay"><span class="text-white font-bold text-xl uppercase tracking-tighter">Perfumes</span></div>
+            </div>
+            <div class="category-card rounded-xl" onclick="filterCategory('T-Shirt')">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500" alt="T-Shirts">
+                <div class="category-overlay"><span class="text-white font-bold text-xl uppercase tracking-tighter">T-Shirts</span></div>
+            </div>
+            <div class="category-card rounded-xl" onclick="filterCategory('Shirt')">
+                <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500" alt="Shirts">
+                <div class="category-overlay"><span class="text-white font-bold text-xl uppercase tracking-tighter">Shirts</span></div>
+            </div>
+            <div class="category-card rounded-xl" onclick="filterCategory('Shoes')">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" alt="Shoes">
+                <div class="category-overlay"><span class="text-white font-bold text-xl uppercase tracking-tighter">Shoes</span></div>
+            </div>
+            <div class="category-card rounded-xl" onclick="filterCategory('Boots')">
+                <img src="https://images.unsplash.com/photo-1520639889313-7272170b1ca0?w=500" alt="Boots">
+                <div class="category-overlay"><span class="text-white font-bold text-xl uppercase tracking-tighter">Boots</span></div>
+            </div>
+        </div>
+    </section>
 
-    <section class="container mx-auto px-6 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="product-container">
+    <section class="px-8 py-12 bg-[#fafafa]">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <h3 id="current-category" class="text-4xl font-light tracking-tighter">Our Collection</h3>
+                <p class="text-gray-400 text-sm mt-2">Premium quality curated for the modern man.</p>
+            </div>
+        </div>
+        
+        <div id="product-grid" class="product-grid">
             </div>
     </section>
 
-    <div id="cart-modal" class="fixed inset-0 z-[100] cart-modal flex items-center justify-center p-4">
-        <div class="bg-white text-black w-full max-w-md p-8 rounded-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold">Your Cart</h3>
-                <button onclick="toggleCart()" class="text-gray-500 text-xl">&times;</button>
+    <div id="cart-modal" class="fixed inset-0 z-[100] cart-modal flex justify-end">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl p-8 flex flex-col">
+            <div class="flex justify-between items-center mb-10">
+                <h3 class="text-2xl font-bold tracking-tighter">Your Bag</h3>
+                <button onclick="toggleCart()" class="text-3xl font-light">&times;</button>
             </div>
-            <div id="cart-items" class="max-h-60 overflow-y-auto mb-6">
+            <div id="cart-items" class="flex-1 overflow-y-auto">
                 </div>
-            <div class="border-t pt-4">
-                <div class="flex justify-between text-xl font-bold mb-6">
-                    <span>Total:</span>
-                    <span id="cart-total">₹0</span>
+            <div class="border-t border-gray-100 pt-8">
+                <div class="flex justify-between text-2xl mb-8">
+                    <span class="font-light">Total</span>
+                    <span id="cart-total" class="font-bold">₹0</span>
                 </div>
-                <button onclick="checkoutWhatsApp()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-green-700">
-                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                <button onclick="checkoutWhatsApp()" class="w-full bg-black text-white py-5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-gray-800 transition shadow-lg">
+                    Order via WhatsApp
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        const products = [
-            { id: 1, name: "Oud Noir Perfume", price: 1250, category: "Perfume", img: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400" },
-            { id: 2, name: "Urban Oversized Tee", price: 899, category: "T-Shirt", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" },
-            { id: 3, name: "Legacy Leather Boots", price: 2499, category: "Boots", img: "https://images.unsplash.com/photo-1520639889313-7272170b1ca0?w=400" },
-            { id: 4, name: "Midnight Essence", price: 450, category: "Perfume", img: "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400" },
-            { id: 5, name: "Street Sneakers", price: 1800, category: "Shoes", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" }
-        ];
+        // Placeholder items - To reach 100+ items, you would use a loop
+        const categories = ["Perfume", "T-Shirt", "Shirt", "Shoes", "Boots"];
+        const products = [];
+
+        // AI Logic to generate 100 dummy products (20 per category)
+        categories.forEach(cat => {
+            for(let i=1; i<=20; i++) {
+                let price;
+                if(cat === 'Perfume') price = Math.floor(Math.random() * (2500 - 300) + 300);
+                else price = Math.floor(Math.random() * (2000 - 500) + 500);
+
+                products.push({
+                    id: `${cat}-${i}`,
+                    name: `URES ${cat} Edition #${i}`,
+                    category: cat,
+                    price: price,
+                    img: `https://images.unsplash.com/photo-1541643600914-78b084683601?w=400` // Use actual links here
+                });
+            }
+        });
 
         let cart = [];
 
-        function renderProducts() {
-            const container = document.getElementById('product-container');
-            container.innerHTML = products.map(p => `
-                <div class="product-card bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
-                    <img src="${p.img}" class="w-full h-64 object-cover" alt="${p.name}">
-                    <div class="p-6">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest">${p.category}</span>
-                        <h4 class="text-xl font-semibold mt-1">${p.name}</h4>
-                        <p class="text-gray-300 mt-2 font-bold">₹${p.price}</p>
-                        <button onclick="addToCart(${p.id})" class="mt-4 w-full bg-white text-black py-2 rounded-lg font-bold hover:bg-gray-200 transition">
-                            Add to Cart
-                        </button>
+        function renderProducts(filter = 'All') {
+            const grid = document.getElementById('product-grid');
+            const displayProducts = filter === 'All' ? products : products.filter(p => p.category === filter);
+            
+            grid.innerHTML = displayProducts.map(p => `
+                <div class="group bg-white p-4 rounded-2xl hover:shadow-xl transition-all border border-gray-50">
+                    <div class="overflow-hidden rounded-xl h-64 bg-gray-100">
+                        <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest">${p.category}</p>
+                        <h4 class="font-medium text-gray-800 truncate">${p.name}</h4>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="font-bold text-lg">₹${p.price}</span>
+                            <button onclick="addToCart('${p.id}')" class="bg-black text-white p-2 px-4 rounded-full text-xs uppercase tracking-tighter hover:bg-gray-700 transition">
+                                Add +
+                            </button>
+                        </div>
                     </div>
                 </div>
             `).join('');
+            
+            document.getElementById('current-category').innerText = filter === 'All' ? 'Our Collection' : filter + 's';
+        }
+
+        function filterCategory(cat) {
+            renderProducts(cat);
+            window.scrollTo({ top: document.getElementById('current-category').offsetTop - 100, behavior: 'smooth' });
         }
 
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             cart.push(product);
             updateCart();
-            // Simple animation feedback
-            const btn = event.target;
-            btn.innerText = "✓ Added";
-            setTimeout(() => btn.innerText = "Add to Cart", 1000);
         }
 
         function updateCart() {
@@ -99,28 +156,39 @@
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             
             cartItems.innerHTML = cart.map((item, index) => `
-                <div class="flex justify-between items-center mb-4">
-                    <span class="font-medium">${item.name}</span>
-                    <span class="text-gray-600">₹${item.price}</span>
+                <div class="flex items-center gap-4 mb-6 border-b border-gray-50 pb-4">
+                    <img src="${item.img}" class="w-16 h-16 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h5 class="font-bold text-sm">${item.name}</h5>
+                        <p class="text-gray-500 text-xs">₹${item.price}</p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-gray-300 hover:text-red-500">&times;</button>
                 </div>
             `).join('');
             
             document.getElementById('cart-total').innerText = `₹${total}`;
         }
 
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
         function toggleCart() {
             const modal = document.getElementById('cart-modal');
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+            modal.classList.toggle('hidden');
+            modal.style.display = modal.classList.contains('hidden') ? 'none' : 'flex';
         }
 
         function checkoutWhatsApp() {
-            if(cart.length === 0) return alert("Cart is empty!");
+            if(cart.length === 0) return alert("Your bag is empty!");
             const total = cart.reduce((sum, item) => sum + item.price, 0);
-            const message = `Hello URES! I want to order:\n\n${cart.map(i => `- ${i.name} (₹${i.price})`).join('\n')}\n\nTotal: ₹${total}`;
-            const whatsappUrl = `https://wa.me/YOUR_PHONE_NUMBER?text=${encodeURIComponent(message)}`;
+            const message = `Hello URES! I would like to order:\n\n${cart.map(i => `- ${i.name} (₹${i.price})`).join('\n')}\n\n*Total: ₹${total}*\n\nPlease confirm my order.`;
+            const whatsappUrl = `https://wa.me/917902408917?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
 
+        // Initial Load
         renderProducts();
     </script>
 </body>
