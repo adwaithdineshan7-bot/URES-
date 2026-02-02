@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URES – Minimal Premium Store</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <h1>URES</h1>
+  <div class="cart-btn" onclick="toggleCart()">
+    🛒 <span id="cart-count">0</span>
+  </div>
+</header>
+
+<!-- CATEGORY SECTION -->
+<section class="categories">
+  <div class="category" onclick="showCategory('perfumes')">Perfumes</div>
+  <div class="category" onclick="showCategory('tshirts')">T-Shirts</div>
+  <div class="category" onclick="showCategory('shirts')">Shirts</div>
+  <div class="category" onclick="showCategory('shoes')">Shoes</div>
+  <div class="category" onclick="showCategory('boots')">Boots</div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="products"></section>
+
+<!-- CART -->
+<div id="cart" class="cart">
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <p class="total">Subtotal: ₹<span id="total">0</span></p>
+  <a id="whatsapp" target="_blank" class="whatsapp-btn">
+    Order on WhatsApp
+  </a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
