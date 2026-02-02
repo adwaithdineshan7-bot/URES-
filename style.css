@@ -17,49 +17,53 @@ body {
   border-bottom: 1px solid #eee;
 }
 
-.header h1 {
-  letter-spacing: 4px;
-}
-
 .cart-btn {
   cursor: pointer;
-  font-size: 18px;
 }
 
-/* CATEGORIES */
-.categories {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding: 20px;
+/* CATEGORY HOME */
+.category-home {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 50px;
 }
 
-.category {
-  padding: 15px 25px;
-  border-radius: 30px;
+.category-card {
+  height: 220px;
   background: linear-gradient(135deg, #f5f5f5, #eaeaea);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.category:hover {
-  transform: translateY(-4px);
+.category-card span {
+  font-size: 26px;
+  letter-spacing: 3px;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
 }
 
 /* PRODUCTS */
 .products {
+  padding: 40px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
-  padding: 40px;
 }
 
 .product {
   background: #fff;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   padding: 15px;
   text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   animation: pop 0.4s ease;
 }
 
@@ -70,23 +74,23 @@ body {
 
 .product button {
   margin-top: 10px;
-  padding: 10px;
   width: 100%;
-  border: none;
+  padding: 10px;
   border-radius: 25px;
+  border: none;
   background: #111;
-  color: #fff;
+  color: white;
   cursor: pointer;
 }
 
 /* CART */
 .cart {
   position: fixed;
-  right: -350px;
+  right: -320px;
   top: 0;
   width: 300px;
   height: 100%;
-  background: #fff;
+  background: white;
   padding: 20px;
   box-shadow: -10px 0 30px rgba(0,0,0,0.1);
   transition: right 0.3s;
@@ -99,15 +103,19 @@ body {
 .whatsapp-btn {
   display: block;
   margin-top: 20px;
-  text-align: center;
   padding: 12px;
   background: #25D366;
-  color: #fff;
+  color: white;
+  text-align: center;
   border-radius: 30px;
   text-decoration: none;
 }
 
+.hidden {
+  display: none;
+}
+
 @keyframes pop {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
